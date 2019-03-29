@@ -520,8 +520,8 @@ export default {
   width: 32px;
   height: 32px;
 }
-.canvassize .Cwidth{
-	margin: 10px 0;
+.canvassize .Cwidth {
+  margin: 10px 0;
 }
 canvas {
   border: 1px solid #7b899b;
