@@ -125,12 +125,14 @@
             </el-submenu>
             <el-submenu index="6">
               <template slot="title">
-                <i class="el-icon-close"></i>
-                <span slot="title">橡皮擦</span>
+                <i class="el-icon-setting"></i>
+                <span slot="title">设置</span>
               </template>
               <el-menu-item-group>
-                <div>
+                <div class="step">
                   <el-button class="clearn" @click="clearncanvas"></el-button>
+                  <el-button class="canvasundo" @click="canvasUndo"></el-button>
+                  <el-button class="canvasredo" @click="canvasRedo"></el-button>
                 </div>
               </el-menu-item-group>
             </el-submenu>
@@ -140,7 +142,7 @@
                 <span slot="title">图片保存</span>
               </template>
               <el-menu-item-group>
-                <div>
+                <div class="picture">
                   <el-button type="success" @click="saveCanvas()">保存图像</el-button>
                   <el-button type="danger" @click="clearCanvas()">清除图像</el-button>
                   <div id="savedCopyContainer">
@@ -237,7 +239,9 @@ export default {
       previousThicknessElement: "", // 保存之前选择的粗细的画笔 <img> 元素标签
       canvaswidth: "500",
       canvasheight: "600",
-      eraserEnabled: false //橡皮
+      eraserEnabled: false, //橡皮
+      canvasHistory: [], //保存画图历史路径
+      step: 0 //上一步（撤销功能）
     };
   },
   computed: {
@@ -246,6 +250,34 @@ export default {
     }
   },
   methods: {
+    // 撤销
+    canvasUndo() {
+      if (this.step >= 0) {
+        this.step--;
+        this.context.clearRect(0, 0, this.canvaswidth, this.canvasheight);
+        let canvasPic = new Image();
+        canvasPic.src = this.canvasHistory[this.step];
+        canvasPic.addEventListener("load", () => {
+          this.context.drawImage(canvasPic, 0, 0);
+        });
+      } else {
+        console.log("不能再继续撤销了");
+      }
+    },
+    // 反撤销方法
+    canvasRedo() {
+      if (this.step < this.canvasHistory.length ) {
+        this.step++;
+        let canvasPic = new Image();
+        canvasPic.src = this.canvasHistory[this.step];
+        canvasPic.addEventListener("load", () => {
+          this.context.clearRect(0, 0, this.canvaswidth, this.canvasheight);
+          this.context.drawImage(canvasPic, 0, 0);
+        });
+      } else {
+        console.log("已经是最新的记录了");
+      }
+    },
     clearncanvas() {
       this.eraserEnabled = true;
     },
@@ -327,6 +359,17 @@ export default {
     },
     // 开始画图
     startDrawing(e) {
+      console.log("strat drawing...");
+
+      console.log(this.step);
+
+      this.step++;
+
+      if (this.step < this.canvasHistory.length) {
+        this.canvasHistory.length = this.step;
+      }
+      // this.canvasHistory.push(imgData);
+
       this.isDrawing = true;
       // 创建一个新的绘图路径
       this.context.beginPath();
@@ -359,6 +402,7 @@ export default {
           e.pageY - this.canvas.offsetTop
         );
       }
+      this.canvasHistory.push(this.canvas.toDataURL());
     },
 
     // 停止画图
@@ -450,7 +494,8 @@ export default {
       );
       let pageWidth = document.documentElement.clientWidth - 300;
       let pageHeight = document.documentElement.clientHeight - 300;
-
+      this.canvaswidth = pageWidth;
+      this.canvasheight = pageHeight;
       this.canvas.width = pageWidth;
       this.canvas.height = pageHeight;
       this.context.putImageData(imgData, 0, 0);
@@ -513,8 +558,40 @@ export default {
   width: auto;
   margin: 10px 0;
 }
+.linesize{
+  margin: 0 10px;
+}
+.linecap {
+  margin: 0 10px;
+}
+.step {
+  margin: 0 10px;
+}
+.copyright{
+  margin: 0 10px;
+}
+.canvassize{
+  margin: 0 10px;
+}
+.picture{
+  margin: 0 10px;
+}
 .el-button.clearn {
   background-image: url("../assets/xiangpica.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 32px;
+  height: 32px;
+}
+.el-button.canvasundo {
+  background-image: url("../assets/canvasundo.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 32px;
+  height: 32px;
+}
+.el-button.canvasredo {
+  background-image: url("../assets/canvasredo.png");
   background-repeat: no-repeat;
   background-position: center center;
   width: 32px;
@@ -529,6 +606,7 @@ canvas {
 
 #savedCopyContainer {
   display: none;
+  margin: 20px;
 }
 
 #savedCopyContainer img {
