@@ -34,7 +34,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 ### 项目截图
-[![img](./doc/img/img1.png)](https://github.com/tianjianen/vue-canvas)
+[![img](./doc/img/img1.png)](https://tianjianen.github.io/vue-canvas.html)
 
 > for the free
 >[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
