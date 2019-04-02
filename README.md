@@ -4,7 +4,9 @@
 ```
 git clone https://github.com/tianjianen/vue-canvas.git
 ```
-
+```
+cd vue-canvas
+```
 ```
 yarn install
 ```
