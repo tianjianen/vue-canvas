@@ -20,17 +20,17 @@
 
 <script>
 export default {
-	props:{
-		title:{
-			default: '线条类型',
-			type: String
-		}
-	},
-	methods:{
-		changeLineCap(val) {
-			this.$emit('changelineCap', val);
-		}
-	}
+  props: {
+    title: {
+      default: "线条类型",
+      type: String
+    }
+  },
+  methods: {
+    changeLineCap(val) {
+      this.$emit("changelineCap", val);
+    }
+  }
 };
 </script>
 

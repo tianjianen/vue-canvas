@@ -21,42 +21,42 @@
 
 <script>
 export default {
-	props:{
-		title:{
-			default:'画布大小',
-			type: String
-		},
-		min:{
-			default:500,
-			type: Number
-		},
-		step:{
-			default: 20,
-			type: Number
-		},
-		canvasheight:{
-			default: 500,
-			// type: Number
-		},
-		canvaswidth:{
-			default: 600,
-			// type: Number
-		}
-	},
-	data() {
-		return {
-			CanvasWdith: this.canvaswidth,
-			CanvasHeight: this.canvasheight
-		}
-	},
-	methods:{
-		changeWdith(val) {
-			this.$emit('changeWsize', val);
-		},
-		changeHeight(val) {
-			this.$emit('changeHsize', val);
-		}
-	}
+  props: {
+    title: {
+      default: "画布大小",
+      type: String
+    },
+    min: {
+      default: 500,
+      type: Number
+    },
+    step: {
+      default: 20,
+      type: Number
+    },
+    canvasheight: {
+      default: 500
+      // type: Number
+    },
+    canvaswidth: {
+      default: 600
+      // type: Number
+    }
+  },
+  data() {
+    return {
+      CanvasWdith: this.canvaswidth,
+      CanvasHeight: this.canvasheight
+    };
+  },
+  methods: {
+    changeWdith(val) {
+      this.$emit("changeWsize", val);
+    },
+    changeHeight(val) {
+      this.$emit("changeHsize", val);
+    }
+  }
 };
 </script>
 

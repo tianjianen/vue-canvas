@@ -22,15 +22,15 @@
 import { Sketch } from "vue-color";
 export default {
   props: {
-		colors:{
-			default: {},
-			type: Object
-		},
-		title:{
-			default:'线条颜色',
-			type: String
-		}
-	},
+    colors: {
+      default: () => {},
+      type: Object
+    },
+    title: {
+      default: "线条颜色",
+      type: String
+    }
+  },
   components: {
     "sketch-picker": Sketch
   },

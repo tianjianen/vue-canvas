@@ -21,37 +21,37 @@
 <script>
 import { Slider } from "vue-color";
 export default {
-	props:{
-		title:{
-			default:'添加水印',
-			type:String
-		},
-		copyval:{
-			default:'',
-			type: String
-		},
-		copyrightcolors:{
-			default:{},
-			type: Object
-		}
-	},
-	components:{
-		'slider-picker': Slider
-	},
-	data() {
-		return {
-			text: this.copyval,
-			colors: this.copyrightcolors
-		}
-	},
-	methods:{
-		updateText(val) {
-			this.$emit('changeText', val);
-		},
-		updateColors(val) {
-			this.$emit('updateCopyRight', val);
-		}
-	}
+  props: {
+    title: {
+      default: "添加水印",
+      type: String
+    },
+    copyval: {
+      default: "",
+      type: String
+    },
+    copyrightcolors: {
+      default: () => {},
+      type: Object
+    }
+  },
+  components: {
+    "slider-picker": Slider
+  },
+  data() {
+    return {
+      text: this.copyval,
+      colors: this.copyrightcolors
+    };
+  },
+  methods: {
+    updateText(val) {
+      this.$emit("changeText", val);
+    },
+    updateColors(val) {
+      this.$emit("updateCopyRight", val);
+    }
+  }
 };
 </script>
 

@@ -16,23 +16,23 @@
 
 <script>
 export default {
-	props:{
-		title:{
-			default:'画图设置',
-			type: String
-		}
-	},
-	methods:{
-		ClearnCanvas() {
-			this.$emit('clearncanvas');
-		},
-		CanvasUndo() {
-			this.$emit('canvasUndo');
-		},
-		CanvasRedo() {
-			this.$emit('canvasRedo')
-		}
-	}
+  props: {
+    title: {
+      default: "画图设置",
+      type: String
+    }
+  },
+  methods: {
+    ClearnCanvas() {
+      this.$emit("clearncanvas");
+    },
+    CanvasUndo() {
+      this.$emit("canvasUndo");
+    },
+    CanvasRedo() {
+      this.$emit("canvasRedo");
+    }
+  }
 };
 </script>
 

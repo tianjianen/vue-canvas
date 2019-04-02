@@ -18,8 +18,7 @@
           </el-radio-group>
           <el-menu
             class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
+            
             :collapse="isCollapse"
           >
           <!-- 颜色设置 -->
@@ -156,7 +155,11 @@ export default {
           this.context.drawImage(canvasPic, 0, 0);
         });
       } else {
-        console.log("不能再继续撤销了");
+        // console.log("不能再继续撤销了");
+        this.$message({
+          message: '不能再继续撤销了',
+          type: 'warning'
+        });
       }
     },
     // 反撤销方法
@@ -170,7 +173,11 @@ export default {
           this.context.drawImage(canvasPic, 0, 0);
         });
       } else {
-        console.log("已经是最新的记录了");
+        // console.log("已经是最新的记录了");
+        this.$message({
+          message: '已经是最新的记录了',
+          type: 'success'
+        });
       }
     },
     clearncanvas() {
@@ -184,10 +191,7 @@ export default {
         this.canvas.width,
         this.canvas.height
       );
-      let pageWidth = document.documentElement.clientWidth;
-      let pageHeight = document.documentElement.clientHeight;
       this.canvaswidth = val;
-      console.log(pageWidth);
       this.canvas.width = val;
       this.canvas.height = val;
       this.context.putImageData(imgData, 0, 0);
@@ -200,28 +204,17 @@ export default {
         this.canvas.width,
         this.canvas.height
       );
-      let pageWidth = document.documentElement.clientWidth;
-      let pageHeight = document.documentElement.clientHeight;
       this.canvasheight = val;
-      console.log(pageWidth);
       this.canvas.width = val;
       this.canvas.height = val;
       this.context.putImageData(imgData, 0, 0);
     },
-    handleOpen(key, keyPath) {
-      // console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      // console.log(key, keyPath);
-    },
+  
     changeText(val) {
-      console.log(val);
       this.drawText(200, 550, 0, 0, val + "@copy right");
     },
     copyStyle() {},
     drawText(tsx, tsy, x, y, txt) {
-      console.log(this.copyrightcolors.hex8);
-      console.log(this.context);
       var text = txt;
       this.context.save(); //保存原来的状态  绘制字体都是需要旋转倾斜  那么之前绘制的图片就要进行状态的保存
       // this.context.rotate(-Math.PI / 6); //绘制倾斜字体
@@ -233,31 +226,25 @@ export default {
     },
     // 设置lineCap
     changelineCap(style) {
-      console.log(style);
       this.context.lineCap = style;
     },
     // 更新线条的粗细
     changelinevalue(val) {
-      // console.log(val)
       this.linevalue = val;
       this.changeThickness(this.linevalue);
     },
     updateCopyRight(val) {
       this.copyrightcolors = val;
-      console.log(this.copyrightcolors);
     },
     // 更新颜色
     updateValue(val) {
       this.colors = val;
-      console.log(val);
 
       this.changeColor(this.currcolor);
     },
     // 开始画图
     startDrawing(e) {
-      console.log("strat drawing...");
 
-      console.log(this.step);
 
       this.step++;
 
@@ -272,8 +259,6 @@ export default {
 
       // 把画笔移动到鼠标位置
       if (this.isDrawing === true && this.eraserEnabled === false) {
-        console.log(this.currcolor);
-        console.log("drawing");
         this.context.globalCompositeOperation = "source-over";
         this.context.strokeStyle = this.currcolor;
         this.context.lineWidth = this.linevalue;
@@ -283,10 +268,8 @@ export default {
           e.pageX - this.canvas.offsetLeft,
           e.pageY - this.canvas.offsetTop
         );
-        console.log(this.context);
       }
       if (this.eraserEnabled === true && this.isDrawing === true) {
-        console.log("clean");
         this.context.globalCompositeOperation = "destination-out";
         // this.context.strokeStyle = '#fff';
         this.context.lineWidth = this.linevalue;
@@ -320,7 +303,6 @@ export default {
       }
       if (this.isDrawing == true && this.eraserEnabled === false) {
         // 找到鼠标最新位置
-        console.log("drawing....");
 
         this.context.lineTo(x, y);
         this.context.stroke();
@@ -341,7 +323,6 @@ export default {
     // 改变画笔颜色
     changeColor(color) {
       this.context.strokeStyle = color;
-      console.log(color);
     },
 
     // 改变画笔粗细
@@ -407,13 +388,10 @@ export default {
         // 使用touch事件
         this.canvas.ontouchstart = e => {
           // 开始触摸
-          // console.log('hello');
           this.startDrawing(e);
         };
         this.canvas.ontouchmove = e => {
           // 开始滑动
-          console.log(e);
-          console.log("hello");
           this.draw(e);
         };
         this.canvas.ontouchend = e => {

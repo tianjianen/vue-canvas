@@ -19,20 +19,20 @@
 
 <script>
 export default {
-	props:{
-		title:{
-			default:'保存图片',
-			type: String
-		}
-	},
-	methods:{
-		CanvasSave() {
-			this.$emit('saveCanvas');
-		},
-		CanvasClean() {
-			this.$emit('clearCanvas');
-		}
-	}
+  props: {
+    title: {
+      default: "保存图片",
+      type: String
+    }
+  },
+  methods: {
+    CanvasSave() {
+      this.$emit("saveCanvas");
+    },
+    CanvasClean() {
+      this.$emit("clearCanvas");
+    }
+  }
 };
 </script>
 
