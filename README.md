@@ -2,6 +2,10 @@
 
 ## Project setup
 ```
+git clone https://github.com/tianjianen/vue-canvas.git
+```
+
+```
 yarn install
 ```
 
