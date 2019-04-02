@@ -22,143 +22,25 @@
             @close="handleClose"
             :collapse="isCollapse"
           >
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span slot="title">线条颜色</span>
-              </template>
-              <el-menu-item-group>
-                <div class="color">
-                  <sketch-picker
-                    @input="updateValue"
-                    :value="colors"
-                    :presetColors="[ 
-			'#f00', '#00ff00', '#00ff0055', 'rgb(201, 76, 76)', 'rgba(0,0,255,1)', 'hsl(89, 43%, 51%)', 'hsla(89, 43%, 51%, 0.6)'
-		]"
-                  ></sketch-picker>
-                </div>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-edit"></i>
-                <span slot="title">线条粗细</span>
-              </template>
-              <el-menu-item-group>
-                <div class="linesize">
-                  <el-slider
-                    v-model="linevalue"
-                    :min="1"
-                    :max="50"
-                    :debounce="500"
-                    @change="changelinevalue"
-                  ></el-slider>
-                </div>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span slot="title">线条类型</span>
-              </template>
-              <el-menu-item-group>
-                <div class="linecap">
-                  <el-button
-                    type="primary"
-                    @click="changelineCap('butt')"
-                    icon="el-icon-edit"
-                    circle
-                  ></el-button>
-                  <el-button
-                    type="success"
-                    @click="changelineCap('round')"
-                    icon="el-icon-edit-outline"
-                    circle
-                  ></el-button>
-                </div>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-view"></i>
-                <span slot="title">添加水印</span>
-              </template>
-              <el-menu-item-group>
-                <div class="copyright">
-                  <el-input
-                    placeholder="请输入作者"
-                    suffix-icon="el-icon-tickets"
-                    @change="changeText"
-                    v-model="copyval"
-                  ></el-input>
-                  <slider-picker :value="copyrightcolors" @input="updateCopyRight"/>
-                </div>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="5">
-              <template slot="title">
-                <i class="el-icon-edit-outline"></i>
-                <span slot="title">画布大小</span>
-              </template>
-              <el-menu-item-group>
-                <div class="canvassize">
-                  <div class="Cwidth">
-                    <el-button>宽度</el-button>
-                    <el-input-number
-                      v-model="canvaswidth"
-                      :min="500"
-                      :step="20"
-                      @change="changeWsize"
-                    ></el-input-number>
-                  </div>
-                  <div class="Cheight">
-                    <el-button>高度</el-button>
-                    <el-input-number
-                      v-model="canvasheight"
-                      :min="500"
-                      :step="20"
-                      @change="changeHsize"
-                    ></el-input-number>
-                  </div>
-                </div>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="6">
-              <template slot="title">
-                <i class="el-icon-setting"></i>
-                <span slot="title">设置</span>
-              </template>
-              <el-menu-item-group>
-                <div class="step">
-                  <el-button class="clearn" @click="clearncanvas"></el-button>
-                  <el-button class="canvasundo" @click="canvasUndo"></el-button>
-                  <el-button class="canvasredo" @click="canvasRedo"></el-button>
-                </div>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="7">
-              <template slot="title">
-                <i class="el-icon-picture-outline"></i>
-                <span slot="title">图片保存</span>
-              </template>
-              <el-menu-item-group>
-                <div class="picture">
-                  <el-button type="success" @click="saveCanvas()">保存图像</el-button>
-                  <el-button type="danger" @click="clearCanvas()">清除图像</el-button>
-                  <div id="savedCopyContainer">
-                    <img id="savedImageCopy">
-                    <br>使用右键保存图像 ...
-                  </div>
-                </div>
-              </el-menu-item-group>
-            </el-submenu>
+          <!-- 颜色设置 -->
+          <Color @updateValue='updateValue' :colors="colors"/>
+          <!-- 线条粗细 -->
+          <LineSize @changeValue ='changelinevalue' :linevalue='linevalue'/>
+          <!-- 线条类型 -->
+          <LineCap  @changelineCap='changelineCap' />
+          <!-- 画布大小 -->
+          <CanvasSize @changeWsize='changeWsize' @changeHsize='changeHsize' :canvaswidth='canvaswidth' :canvasheight='canvasheight' />
+          <!-- 画布设置 -->
+          <CanvasSet @clearncanvas='clearncanvas' @canvasUndo='canvasUndo' @canvasRedo='canvasRedo' />
+          <!-- 添加水印 -->
+          <CopyRight :copyval='copyval' :copyrightcolors='copyrightcolors' @changeText='changeText' @updateCopyRight='updateCopyRight'/>
+          <!-- 保存图片 -->
+          <CanvasSave @saveCanvas="saveCanvas" @clearCanvas="clearCanvas"/>
           </el-menu>
         </el-aside>
         <el-container>
           <el-main>
-            <div class="CanvasContainer">
-              <canvas id="drawingCanvas" width="500" height="600"></canvas>
-            </div>
+           <Content/>
           </el-main>
           <el-footer>
             <Footer/>
@@ -170,16 +52,29 @@
 </template>
 
 <script>
-import { Sketch, Slider } from "vue-color";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
+import Content from "./Content/Content";
+import Color from './BaseComponents/Color/Color';
+import LineSize from './BaseComponents/LineSize/LineSize';
+import LineCap from './BaseComponents/LineCap/LineCap';
+import CanvasSize from './BaseComponents/CanvasSize/CanvasSize';
+import CanvasSet from './BaseComponents/CanvasSet/CanvasSet';
+import CopyRight from './BaseComponents/CopyRight/CopyRight';
+import CanvasSave from './BaseComponents/CanvasSave/CanvasSave';
 
 export default {
   components: {
-    "sketch-picker": Sketch,
-    "slider-picker": Slider,
     Header,
-    Footer
+    Footer,
+    Content,
+    Color,
+    LineSize,
+    LineCap,
+    CanvasSize,
+    CanvasSet,
+    CopyRight,
+    CanvasSave
   },
   data() {
     return {
@@ -266,7 +161,7 @@ export default {
     },
     // 反撤销方法
     canvasRedo() {
-      if (this.step < this.canvasHistory.length ) {
+      if (this.step < this.canvasHistory.length) {
         this.step++;
         let canvasPic = new Image();
         canvasPic.src = this.canvasHistory[this.step];
@@ -338,6 +233,7 @@ export default {
     },
     // 设置lineCap
     changelineCap(style) {
+      console.log(style);
       this.context.lineCap = style;
     },
     // 更新线条的粗细
@@ -558,7 +454,7 @@ export default {
   width: auto;
   margin: 10px 0;
 }
-.linesize{
+.linesize {
   margin: 0 10px;
 }
 .linecap {
@@ -567,13 +463,13 @@ export default {
 .step {
   margin: 0 10px;
 }
-.copyright{
+.copyright {
   margin: 0 10px;
 }
-.canvassize{
+.canvassize {
   margin: 0 10px;
 }
-.picture{
+.picture {
   margin: 0 10px;
 }
 .el-button.clearn {
