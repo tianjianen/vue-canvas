@@ -3,16 +3,7 @@ import App from './App.vue'
 // import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from './store/store'
-// import {
-//   Slider, 
-//   Container,
-//   Header,
-//   Aside,
-//   Main,
-//   Footer,
-//   Button,
-//   Input
-// } from 'element-ui';
+
 import {
   Pagination,
   Dialog,
@@ -155,14 +146,7 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
-// Vue.use(Slider)
-// Vue.use(Container)
-// Vue.use(Header)
-// Vue.use(Aside)
-// Vue.use(Main)
-// Vue.use(Footer)
-// Vue.use(Button)
-// Vue.use(Input)
+
 
 Vue.config.productionTip = false
 
