@@ -5,6 +5,6 @@ module.exports = {
 	productionSourceMap: false,
 	assetsDir:'vue-canvas-static',
 	indexPath:'vue-canvas.html',
-	// outputDir: 'pages'
+	outputDir: '/example'
 
 }
