@@ -16,30 +16,40 @@
               <span class="el-icon-arrow-right"></span>
             </el-radio-button>
           </el-radio-group>
-          <el-menu
-            class="el-menu-vertical-demo"
-            
-            :collapse="isCollapse"
-          >
-          <!-- 颜色设置 -->
-          <Color @updateValue='updateValue' :colors="colors"/>
-          <!-- 线条粗细 -->
-          <LineSize @changeValue ='changelinevalue' :linevalue='linevalue'/>
-          <!-- 线条类型 -->
-          <LineCap  @changelineCap='changelineCap' />
-          <!-- 画布大小 -->
-          <CanvasSize @changeWsize='changeWsize' @changeHsize='changeHsize' :canvaswidth='canvaswidth' :canvasheight='canvasheight' />
-          <!-- 画布设置 -->
-          <CanvasSet @clearncanvas='clearncanvas' @canvasUndo='canvasUndo' @canvasRedo='canvasRedo' />
-          <!-- 添加水印 -->
-          <CopyRight :copyval='copyval' :copyrightcolors='copyrightcolors' @changeText='changeText' @updateCopyRight='updateCopyRight'/>
-          <!-- 保存图片 -->
-          <CanvasSave @saveCanvas="saveCanvas" @clearCanvas="clearCanvas"/>
+          <el-menu class="el-menu-vertical-demo" :collapse="isCollapse">
+            <!-- 颜色设置 -->
+            <Color @updateValue="updateValue" :colors="colors"/>
+            <!-- 线条粗细 -->
+            <LineSize @changeValue="changelinevalue" :linevalue="linevalue"/>
+            <!-- 线条类型 -->
+            <LineCap @changelineCap="changelineCap"/>
+            <!-- 画布大小 -->
+            <CanvasSize
+              @changeWsize="changeWsize"
+              @changeHsize="changeHsize"
+              :canvaswidth="canvaswidth"
+              :canvasheight="canvasheight"
+            />
+            <!-- 画布设置 -->
+            <CanvasSet
+              @clearncanvas="clearncanvas"
+              @canvasUndo="canvasUndo"
+              @canvasRedo="canvasRedo"
+            />
+            <!-- 添加水印 -->
+            <CopyRight
+              :copyval="copyval"
+              :copyrightcolors="copyrightcolors"
+              @changeText="changeText"
+              @updateCopyRight="updateCopyRight"
+            />
+            <!-- 保存图片 -->
+            <CanvasSave @saveCanvas="saveCanvas" @clearCanvas="clearCanvas"/>
           </el-menu>
         </el-aside>
         <el-container>
           <el-main>
-           <Content/>
+            <Content/>
           </el-main>
           <el-footer>
             <Footer/>
@@ -54,13 +64,13 @@
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Content from "./Content/Content";
-import Color from './BaseComponents/Color/Color';
-import LineSize from './BaseComponents/LineSize/LineSize';
-import LineCap from './BaseComponents/LineCap/LineCap';
-import CanvasSize from './BaseComponents/CanvasSize/CanvasSize';
-import CanvasSet from './BaseComponents/CanvasSet/CanvasSet';
-import CopyRight from './BaseComponents/CopyRight/CopyRight';
-import CanvasSave from './BaseComponents/CanvasSave/CanvasSave';
+import Color from "./BaseComponents/Color/Color";
+import LineSize from "./BaseComponents/LineSize/LineSize";
+import LineCap from "./BaseComponents/LineCap/LineCap";
+import CanvasSize from "./BaseComponents/CanvasSize/CanvasSize";
+import CanvasSet from "./BaseComponents/CanvasSet/CanvasSet";
+import CopyRight from "./BaseComponents/CopyRight/CopyRight";
+import CanvasSave from "./BaseComponents/CanvasSave/CanvasSave";
 
 export default {
   components: {
@@ -157,8 +167,8 @@ export default {
       } else {
         // console.log("不能再继续撤销了");
         this.$message({
-          message: '不能再继续撤销了',
-          type: 'warning'
+          message: "不能再继续撤销了",
+          type: "warning"
         });
       }
     },
@@ -175,8 +185,8 @@ export default {
       } else {
         // console.log("已经是最新的记录了");
         this.$message({
-          message: '已经是最新的记录了',
-          type: 'success'
+          message: "已经是最新的记录了",
+          type: "success"
         });
       }
     },
@@ -209,7 +219,7 @@ export default {
       this.canvas.height = val;
       this.context.putImageData(imgData, 0, 0);
     },
-  
+
     changeText(val) {
       this.drawText(200, 550, 0, 0, val + "@copy right");
     },
@@ -244,8 +254,6 @@ export default {
     },
     // 开始画图
     startDrawing(e) {
-
-
       this.step++;
 
       if (this.step < this.canvasHistory.length) {
