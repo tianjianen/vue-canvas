@@ -49,6 +49,14 @@ export default {
       CanvasHeight: this.canvasheight
     };
   },
+  watch: {
+    canvaswidth(oldVal, newVal) {
+      this.CanvasWdith = newVal;
+    },
+    canvasheight(oldVal, newVal) {
+      this.CanvasHeight = newVal;
+    }
+  },
   methods: {
     changeWdith(val) {
       this.$emit("changeWsize", val);
