@@ -11,7 +11,6 @@
             <el-radio-button :label="true">
               <span class="el-icon-arrow-left"></span>
             </el-radio-button>
-
             <el-radio-button :label="false">
               <span class="el-icon-arrow-right"></span>
             </el-radio-button>
@@ -426,6 +425,10 @@ export default {
 </script>
 
 <style >
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 300px;
+    min-height: 400px;
+  }
 .el-menu .el-menu--inline {
   padding: 10px;
 }
