@@ -203,7 +203,7 @@ export default {
       );
       this.canvaswidth = val;
       this.canvas.width = val;
-      this.canvas.height = val;
+      this.canvas.height = this.canvas.height;
       this.context.putImageData(imgData, 0, 0);
     },
     changeHsize(val) {
@@ -215,7 +215,7 @@ export default {
         this.canvas.height
       );
       this.canvasheight = val;
-      this.canvas.width = val;
+      this.canvas.width = this.canvas.width;
       this.canvas.height = val;
       this.context.putImageData(imgData, 0, 0);
     },
